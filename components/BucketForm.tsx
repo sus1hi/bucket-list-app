@@ -3,36 +3,44 @@
 import { useState } from "react";
 import { CATEGORIES, type BucketInput, type Category } from "@/types/bucket";
 
-const emptyForm = {
-  headline: "",
-  category: "Activity" as Category,
-  link: "",
-  description: "",
-  doneDate: "",
-};
+// Optional fields become empty strings, because the inputs are controlled.
+function toFormState(initial?: BucketInput) {
+  return {
+    headline: initial?.headline ?? "",
+    category: initial?.category ?? ("Activity" as Category),
+    link: initial?.link ?? "",
+    description: initial?.description ?? "",
+    doneDate: initial?.doneDate ?? "",
+  };
+}
 
 const inputClasses =
   "w-full rounded border border-zinc-300 px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900";
 
-// The bucket is created by the parent, which owns the list state. This
-// component only collects the input.
+// The bucket is written by the parent, which owns the list state. This
+// component only collects the input, for both creating and editing.
 export function BucketForm({
-  onCreate,
+  initial,
+  submitLabel = "Add bucket",
+  onSave,
 }: {
-  onCreate: (input: BucketInput) => void;
+  initial?: BucketInput;
+  submitLabel?: string;
+  onSave: (input: BucketInput) => void;
 }) {
-  const [form, setForm] = useState(emptyForm);
+  // `initial` is read on mount only; the modal remounts the form on each open.
+  const [form, setForm] = useState(() => toFormState(initial));
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    onCreate({
+    onSave({
       headline: form.headline.trim(),
       category: form.category,
       link: form.link.trim() || undefined,
       description: form.description.trim(),
       doneDate: form.doneDate || undefined,
     });
-    setForm(emptyForm);
+    setForm(toFormState(initial));
   }
 
   return (
@@ -105,7 +113,7 @@ export function BucketForm({
         type="submit"
         className="self-start rounded border border-zinc-300 px-3 py-1 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
       >
-        Add bucket
+        {submitLabel}
       </button>
     </form>
   );

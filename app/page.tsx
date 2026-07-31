@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { BucketForm } from "@/components/BucketForm";
+import { Modal } from "@/components/Modal";
 import { useBuckets } from "@/hooks/useBuckets";
 import type { BucketInput } from "@/types/bucket";
 
@@ -54,28 +55,9 @@ export default function Home() {
       )}
 
       {isFormOpen && (
-        <div
-          // Closes only when the overlay itself is clicked, not the panel.
-          onClick={(event) => {
-            if (event.target === event.currentTarget) setIsFormOpen(false);
-          }}
-          className="fixed inset-0 z-10 flex items-center justify-center bg-black/50 p-4"
-        >
-          <div className="max-h-full w-full max-w-md overflow-y-auto rounded bg-white p-4 dark:bg-zinc-900">
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-lg font-medium">New bucket</h2>
-              <button
-                type="button"
-                onClick={() => setIsFormOpen(false)}
-                aria-label="Close"
-                className="px-2 text-xl leading-none"
-              >
-                &times;
-              </button>
-            </div>
-            <BucketForm onCreate={handleCreate} />
-          </div>
-        </div>
+        <Modal title="New bucket" onClose={() => setIsFormOpen(false)}>
+          <BucketForm onSave={handleCreate} />
+        </Modal>
       )}
     </div>
   );
