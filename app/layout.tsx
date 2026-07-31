@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { CATEGORIES } from "@/types/bucket";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,9 +18,6 @@ export const metadata: Metadata = {
   title: "Bucket List",
   description: "A personal bucket list",
 };
-
-// Category filters available in the nav bar.
-const categories = ["Activity", "Place", "Other"];
 
 export default function RootLayout({
   children,
@@ -39,7 +37,7 @@ export default function RootLayout({
                 Home
               </Link>
             </li>
-            {categories.map((category) => (
+            {CATEGORIES.map((category) => (
               <li key={category}>
                 <Link
                   href={`/category/${category}`}
