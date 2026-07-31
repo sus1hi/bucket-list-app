@@ -1,9 +1,49 @@
-export default async function CategoryPage({
+"use client";
+
+import { use } from "react";
+import { BucketList } from "@/components/BucketList";
+import { useBuckets } from "@/hooks/useBuckets";
+import { CATEGORIES } from "@/types/bucket";
+
+export default function CategoryPage({
   params,
 }: {
   params: Promise<{ name: string }>;
 }) {
-  const { name } = await params;
+  const { name } = use(params);
+  const { buckets, loaded } = useBuckets();
 
-  return <h1 className="text-2xl font-semibold">Category: {name}</h1>;
+  // Resolve the URL segment to the canonical category, so the heading always
+  // shows the official casing regardless of how the URL was typed.
+  const category = CATEGORIES.find(
+    (item) => item.toLowerCase() === name.toLowerCase(),
+  );
+
+  // Validity depends only on the URL, so this needs no stored data.
+  if (!category) {
+    return (
+      <div className="max-w-xl">
+        <h1 className="text-2xl font-semibold">Unknown category</h1>
+        <p className="mt-6 text-zinc-600 dark:text-zinc-400">
+          &quot;{name}&quot; is not one of {CATEGORIES.join(", ")}.
+        </p>
+      </div>
+    );
+  }
+
+  const matches = buckets.filter((bucket) => bucket.category === category);
+
+  return (
+    <div className="max-w-xl">
+      <h1 className="text-2xl font-semibold">Category: {category}</h1>
+
+      {loaded && matches.length === 0 && (
+        <p className="mt-6 text-zinc-600 dark:text-zinc-400">
+          No buckets in this category yet.
+        </p>
+      )}
+
+      {matches.length > 0 && <BucketList buckets={matches} />}
+    </div>
+  );
 }
