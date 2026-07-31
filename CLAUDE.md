@@ -14,7 +14,10 @@ category filtering, text search, and a completed/open counter.
 - TypeScript
 - Tailwind CSS
 - No backend, no login. Runs locally only via `npm run dev` at localhost:3000.
-- Data persistence mechanism: TBD (to be decided after consulting Claude Code)
+- Data persistence mechanism: localStorage (key: `bucketlist.v1`), with a
+  manual JSON export/import as backup. Read/write only inside useEffect,
+  never in the component body (Next.js renders first on the server, where
+  localStorage does not exist).
 
 ## Rules
 
