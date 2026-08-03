@@ -1,6 +1,7 @@
 "use client";
 
 import { use } from "react";
+import { ActivityBackground } from "@/components/ActivityBackground";
 import { BucketList } from "@/components/BucketList";
 import { useBuckets } from "@/hooks/useBuckets";
 import { CATEGORIES } from "@/types/bucket";
@@ -34,16 +35,17 @@ export default function CategoryPage({
   const matches = buckets.filter((bucket) => bucket.category === category);
 
   return (
-    <div className="max-w-xl">
-      <h1 className="text-2xl font-bold">Category: {category}</h1>
+    <>
+      {category === "Activity" && <ActivityBackground />}
+      <div className="max-w-xl">
+        <h1 className="text-2xl font-bold">Category: {category}</h1>
 
-      {loaded && matches.length === 0 && (
-        <p className="mt-6 text-muted">
-          No buckets in this category yet.
-        </p>
-      )}
+        {loaded && matches.length === 0 && (
+          <p className="mt-6 text-muted">No buckets in this category yet.</p>
+        )}
 
-      {matches.length > 0 && <BucketList buckets={matches} />}
-    </div>
+        {matches.length > 0 && <BucketList buckets={matches} />}
+      </div>
+    </>
   );
 }
