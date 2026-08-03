@@ -9,7 +9,7 @@ import { Modal } from "@/components/Modal";
 import { OtherBackground } from "@/components/OtherBackground";
 import { PlaceBackground } from "@/components/PlaceBackground";
 import { useBuckets } from "@/hooks/useBuckets";
-import type { BucketInput } from "@/types/bucket";
+import type { Bucket, BucketInput } from "@/types/bucket";
 
 export default function BucketDetailPage({
   params,
@@ -30,10 +30,13 @@ export default function BucketDetailPage({
     setIsEditOpen(false);
   }
 
-  function handleDelete() {
-    if (!window.confirm("Delete this bucket?")) return;
+  // Takes the bucket rather than closing over it, because this is declared
+  // above the guard that narrows `bucket` to a found item. The call site below
+  // is past that guard, so it can pass a definite value.
+  function handleDelete(target: Bucket) {
+    if (!window.confirm(`Delete "${target.headline}"?`)) return;
     setIsDeleting(true);
-    deleteBucket(id);
+    deleteBucket(target.id);
     router.push("/");
   }
 
@@ -81,7 +84,11 @@ export default function BucketDetailPage({
             >
               Edit
             </button>
-            <button type="button" onClick={handleDelete} className="btn">
+            <button
+              type="button"
+              onClick={() => handleDelete(bucket)}
+              className="btn"
+            >
               Delete
             </button>
           </div>

@@ -67,5 +67,19 @@ export function useBuckets() {
     setBuckets((current) => current.filter((bucket) => bucket.id !== id));
   }, []);
 
-  return { buckets, loaded, addBucket, updateBucket, deleteBucket };
+  // Swaps the whole list, used by the JSON import. The done rule is applied
+  // here like on every other write, so an imported file cannot introduce a
+  // bucket whose `done` flag disagrees with its date.
+  const replaceBuckets = useCallback((next: Bucket[]) => {
+    setBuckets(next.map(applyDoneRule));
+  }, []);
+
+  return {
+    buckets,
+    loaded,
+    addBucket,
+    updateBucket,
+    deleteBucket,
+    replaceBuckets,
+  };
 }

@@ -14,7 +14,7 @@ export default function CategoryPage({
   params: Promise<{ name: string }>;
 }) {
   const { name } = use(params);
-  const { buckets, loaded } = useBuckets();
+  const { buckets, loaded, deleteBucket } = useBuckets();
 
   // Resolve the URL segment to the canonical category, so the heading always
   // shows the official casing regardless of how the URL was typed.
@@ -48,7 +48,9 @@ export default function CategoryPage({
           <p className="mt-6 text-muted">No buckets in this category yet.</p>
         )}
 
-        {matches.length > 0 && <BucketList buckets={matches} />}
+        {matches.length > 0 && (
+          <BucketList buckets={matches} onDelete={deleteBucket} />
+        )}
       </div>
     </>
   );

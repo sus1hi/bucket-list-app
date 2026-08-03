@@ -4,12 +4,14 @@ import { useState } from "react";
 import { BucketForm } from "@/components/BucketForm";
 import { BucketList } from "@/components/BucketList";
 import { HomeBackground } from "@/components/HomeBackground";
+import { ImportExport } from "@/components/ImportExport";
 import { Modal } from "@/components/Modal";
 import { useBuckets } from "@/hooks/useBuckets";
 import type { BucketInput } from "@/types/bucket";
 
 export default function Home() {
-  const { buckets, loaded, addBucket } = useBuckets();
+  const { buckets, loaded, addBucket, deleteBucket, replaceBuckets } =
+    useBuckets();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -45,6 +47,12 @@ export default function Home() {
           </p>
         )}
 
+        {/* Gated on `loaded` so an import cannot be overwritten by the hook's
+            initial read of localStorage, which runs once on mount. */}
+        {loaded && (
+          <ImportExport buckets={buckets} onImport={replaceBuckets} />
+        )}
+
         <input
           type="search"
           value={search}
@@ -62,7 +70,9 @@ export default function Home() {
           <p className="mt-6 text-muted">No buckets match your search.</p>
         )}
 
-        {visibleBuckets.length > 0 && <BucketList buckets={visibleBuckets} />}
+        {visibleBuckets.length > 0 && (
+          <BucketList buckets={visibleBuckets} onDelete={deleteBucket} />
+        )}
 
         {isFormOpen && (
           <Modal title="New bucket" onClose={() => setIsFormOpen(false)}>

@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bucket List
+
+A personal bucket-list app for tracking life goals. Each item has a headline, a
+category (Activity / Place / Other), an optional link, and a free-text
+description. Items can be created, edited, marked complete with a date, and
+deleted, and each one has its own detail page. The list supports filtering by
+category, searching by headline, and a running completed/open counter.
+
+## Screenshot
+
+<!-- screenshot to be added -->
+
+## Tech Stack
+
+- **Next.js** (App Router)
+- **TypeScript**
+- **Tailwind CSS v4**
+- **localStorage** for persistence — no backend, no database, no login
+
+Data lives entirely in the browser, so the list is per-browser and per-device.
+Clearing site data clears the buckets.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+git clone https://github.com/sus1hi/bucket-list-app.git
+cd bucket-list-app
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other scripts:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build   # production build
+npm run start   # serve the production build
+npm run lint    # eslint
+```
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Create** a bucket item through a modal form: headline, category, optional
+  link, description, and an optional completion date.
+- **List view** on the home page showing every item with its category and
+  status.
+- **Detail page** per item at `/buckets/[id]`, showing all fields.
+- **Edit** any item from its detail page, using the same form.
+- **Delete** an item, with a confirmation prompt.
+- **Category pages** at `/category/Activity`, `/category/Place`, and
+  `/category/Other`, reachable from the nav bar.
+- **Search** the list by headline.
+- **Counter** showing how many items are done and how many are still open.
+- **Automatic done status** — an item counts as complete exactly when it has a
+  completion date, so the two fields can never disagree.
+- **Persistence** across reloads via `localStorage` (key: `bucketlist.v1`),
+  with corrupt stored data falling back to an empty list instead of crashing.
+- **Category-specific background illustrations** — a landscape on the home
+  page, and activity, world-map, and night-sky scenes on the category and
+  detail pages, all contrast-checked to stay legible behind text.
