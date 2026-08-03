@@ -48,6 +48,8 @@ npm run lint    # eslint
 - **Detail page** per item at `/buckets/[id]`, showing all fields.
 - **Edit** any item from its detail page, using the same form.
 - **Delete** an item, with a confirmation prompt.
+- **Quick-delete** straight from the list via an × button on each row, on the
+  home page and the category pages alike, with the same confirmation prompt.
 - **Category pages** at `/category/Activity`, `/category/Place`, and
   `/category/Other`, reachable from the nav bar.
 - **Search** the list by headline.
@@ -56,6 +58,9 @@ npm run lint    # eslint
   completion date, so the two fields can never disagree.
 - **Persistence** across reloads via `localStorage` (key: `bucketlist.v1`),
   with corrupt stored data falling back to an empty list instead of crashing.
+- **JSON export/import** on the home page as a manual backup: export writes
+  the list to `bucketlist-export.json`, import validates the file first and
+  then replaces the current list, after a confirmation prompt.
 - **Category-specific background illustrations** — a landscape on the home
   page, and activity, world-map, and night-sky scenes on the category and
   detail pages, all contrast-checked to stay legible behind text.
