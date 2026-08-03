@@ -8,7 +8,9 @@ category, searching by headline, and a running completed/open counter.
 
 ## Screenshot
 
-<!-- screenshot to be added -->
+![The Bucket List home page: a category nav bar, the done/open counter, the
+Export and Import buttons, a search field, and the list of items with their
+category, status, and a delete button.](screenshot.png)
 
 ## Tech Stack
 
