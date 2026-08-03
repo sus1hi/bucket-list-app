@@ -1,3 +1,10 @@
+<!--
+  Bucket List — a local-only Next.js app for tracking life goals. Items have a
+  headline, a category (Activity / Place / Other), an optional link, and a
+  description; they can be created, edited, completed with a date, and deleted.
+  Everything is stored in the browser via localStorage (key: bucketlist.v1).
+-->
+
 # Bucket List
 
 A personal bucket-list app for tracking life goals. Each item has a headline, a
