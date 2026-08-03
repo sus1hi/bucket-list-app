@@ -1,19 +1,17 @@
+import { BackgroundLayer } from "@/components/BackgroundLayer";
+
 // Decorative world-map scatter for the Place category page: abstract
 // landmasses, a faint graticule, and a few pins each paired with a generic
 // architectural silhouette (lattice tower, pyramid, tiered roof, suspension
 // bridge). The shapes are deliberately generic rather than portraits of any
 // particular real structure.
 //
-// Same legibility rule as the other backgrounds: --muted text sits at 4.81:1
-// on cream, so everything behind the max-w-xl text column is faded down. This
-// component stacks fills under strokes, so the mask is tighter than the
-// Activity one — see the measured numbers in the design notes.
+// The landmass fill sits under the graticule and the silhouettes, so up to
+// three layers coincide. That shared budget is why the ink here is lighter
+// than the Activity icons, which never overlap.
 export function PlaceBackground() {
   return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
-    >
+    <BackgroundLayer className="inset-0">
       <svg
         viewBox="0 0 1440 900"
         className="h-full w-full"
@@ -64,89 +62,66 @@ export function PlaceBackground() {
             <path d="M-24 -2 Q -18 -10 -11 -15" />
             <path d="M24 -2 Q 18 -10 11 -15" />
           </g>
-
-          {/* Held at or below 9% across the text column, full strength past
-              60% of the width. Tighter than the Activity fade because up to
-              three layers overlap here (landmass fill, graticule, landmark)
-              rather than a single stroke sitting alone on cream. */}
-          <linearGradient id="pb-fade" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0" stopColor="#fff" stopOpacity="0.05" />
-            <stop offset="0.45" stopColor="#fff" stopOpacity="0.09" />
-            <stop offset="0.6" stopColor="#fff" stopOpacity="1" />
-            <stop offset="1" stopColor="#fff" stopOpacity="1" />
-          </linearGradient>
-          <mask
-            id="pb-mask"
-            maskUnits="userSpaceOnUse"
-            x="0"
-            y="0"
-            width="1440"
-            height="900"
-          >
-            <rect width="1440" height="900" fill="url(#pb-fade)" />
-          </mask>
         </defs>
 
-        <g mask="url(#pb-mask)">
-          {/* Landmasses: abstract blobs, no real coastline intended. */}
-          <g fill="var(--accent)" opacity="0.1">
-            <path d="M120 300 C 260 250 420 290 470 380 C 520 470 420 540 300 520 C 180 500 60 420 120 300 Z" />
-            <path d="M780 180 C 960 130 1180 170 1300 260 C 1400 335 1360 470 1220 500 C 1060 535 880 470 810 370 C 760 300 740 220 780 180 Z" />
-            <path d="M900 700 C 1010 660 1180 680 1260 740 C 1330 792 1300 870 1180 880 C 1040 892 920 830 900 700 Z" />
-          </g>
+        {/* Landmasses: abstract blobs, no real coastline intended. */}
+        <g fill="var(--accent)" opacity="0.05">
+          <path d="M120 300 C 260 250 420 290 470 380 C 520 470 420 540 300 520 C 180 500 60 420 120 300 Z" />
+          <path d="M780 180 C 960 130 1180 170 1300 260 C 1400 335 1360 470 1220 500 C 1060 535 880 470 810 370 C 760 300 740 220 780 180 Z" />
+          <path d="M900 700 C 1010 660 1180 680 1260 740 C 1330 792 1300 870 1180 880 C 1040 892 920 830 900 700 Z" />
+        </g>
 
-          {/* Graticule. */}
-          <g
-            fill="none"
-            stroke="var(--muted)"
-            strokeWidth="2"
-            strokeDasharray="10 12"
-            opacity="0.16"
-          >
-            <path d="M0 200 Q 720 176 1440 200" />
-            <path d="M0 380 Q 720 356 1440 380" />
-            <path d="M0 560 Q 720 536 1440 560" />
-            <path d="M0 740 Q 720 716 1440 740" />
-            <path d="M300 0 Q 260 450 300 900" />
-            <path d="M720 0 L720 900" />
-            <path d="M1140 0 Q 1180 450 1140 900" />
-          </g>
+        {/* Graticule. */}
+        <g
+          fill="none"
+          stroke="var(--muted)"
+          strokeWidth="2"
+          strokeDasharray="10 12"
+          opacity="0.046"
+        >
+          <path d="M0 200 Q 720 176 1440 200" />
+          <path d="M0 380 Q 720 356 1440 380" />
+          <path d="M0 560 Q 720 536 1440 560" />
+          <path d="M0 740 Q 720 716 1440 740" />
+          <path d="M300 0 Q 260 450 300 900" />
+          <path d="M720 0 L720 900" />
+          <path d="M1140 0 Q 1180 450 1140 900" />
+        </g>
 
-          {/* Landmark silhouettes. */}
-          <g
-            fill="none"
-            stroke="var(--foreground)"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.2"
-          >
-            <use href="#pb-pyramid" transform="translate(200 700)" />
-            <use href="#pb-tower" transform="translate(700 250)" />
-            <use href="#pb-pagoda" transform="translate(1010 620)" />
-            <use href="#pb-bridge" transform="translate(1290 300)" />
-            <use href="#pb-pyramid" transform="translate(1170 830)" />
-            <use href="#pb-tower" transform="translate(950 130)" />
-          </g>
+        {/* Landmark silhouettes. */}
+        <g
+          fill="none"
+          stroke="var(--foreground)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.092"
+        >
+          <use href="#pb-pyramid" transform="translate(200 700)" />
+          <use href="#pb-tower" transform="translate(700 250)" />
+          <use href="#pb-pagoda" transform="translate(1010 620)" />
+          <use href="#pb-bridge" transform="translate(1290 300)" />
+          <use href="#pb-pyramid" transform="translate(1170 830)" />
+          <use href="#pb-tower" transform="translate(950 130)" />
+        </g>
 
-          {/* Pins, one per landmark, offset up and to the side. */}
-          <g
-            fill="none"
-            stroke="var(--secondary)"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.26"
-          >
-            <use href="#pb-pin" transform="translate(248 652)" />
-            <use href="#pb-pin" transform="translate(744 196)" />
-            <use href="#pb-pin" transform="translate(1056 568)" />
-            <use href="#pb-pin" transform="translate(1238 236)" />
-            <use href="#pb-pin" transform="translate(1216 782)" />
-            <use href="#pb-pin" transform="translate(996 80)" />
-          </g>
+        {/* Pins, one per landmark, offset up and to the side. */}
+        <g
+          fill="none"
+          stroke="var(--secondary)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.107"
+        >
+          <use href="#pb-pin" transform="translate(248 652)" />
+          <use href="#pb-pin" transform="translate(744 196)" />
+          <use href="#pb-pin" transform="translate(1056 568)" />
+          <use href="#pb-pin" transform="translate(1238 236)" />
+          <use href="#pb-pin" transform="translate(1216 782)" />
+          <use href="#pb-pin" transform="translate(996 80)" />
         </g>
       </svg>
-    </div>
+    </BackgroundLayer>
   );
 }

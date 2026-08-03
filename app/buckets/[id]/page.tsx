@@ -3,8 +3,11 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
+import { ActivityBackground } from "@/components/ActivityBackground";
 import { BucketForm } from "@/components/BucketForm";
 import { Modal } from "@/components/Modal";
+import { OtherBackground } from "@/components/OtherBackground";
+import { PlaceBackground } from "@/components/PlaceBackground";
 import { useBuckets } from "@/hooks/useBuckets";
 import type { BucketInput } from "@/types/bucket";
 
@@ -53,76 +56,84 @@ export default function BucketDetailPage({
     );
   }
 
+  // Both early returns above have already run, so the background only ever
+  // renders for a bucket that is loaded and found -- never during Loading…
+  // or "not found", and never for the wrong category.
   return (
-    <div className="max-w-xl">
-      <p className="mb-4">
-        <Link href="/" className="text-accent-hover hover:underline">
-          Back to list
-        </Link>
-      </p>
+    <>
+      {bucket.category === "Activity" && <ActivityBackground />}
+      {bucket.category === "Place" && <PlaceBackground />}
+      {bucket.category === "Other" && <OtherBackground />}
+      <div className="max-w-xl">
+        <p className="mb-4">
+          <Link href="/" className="text-accent-hover hover:underline">
+            Back to list
+          </Link>
+        </p>
 
-      <div className="flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold">{bucket.headline}</h1>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => setIsEditOpen(true)}
-            className="btn"
-          >
-            Edit
-          </button>
-          <button type="button" onClick={handleDelete} className="btn">
-            Delete
-          </button>
-        </div>
-      </div>
-
-      <dl className="mt-6 flex flex-col gap-4">
-        <div>
-          <dt className="text-sm text-muted">Category</dt>
-          <dd>{bucket.category}</dd>
+        <div className="flex items-center justify-between gap-4">
+          <h1 className="text-2xl font-bold">{bucket.headline}</h1>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setIsEditOpen(true)}
+              className="btn"
+            >
+              Edit
+            </button>
+            <button type="button" onClick={handleDelete} className="btn">
+              Delete
+            </button>
+          </div>
         </div>
 
-        <div>
-          <dt className="text-sm text-muted">Status</dt>
-          <dd className={bucket.done ? "text-secondary" : undefined}>
-            {bucket.done ? `Done (${bucket.doneDate})` : "Open"}
-          </dd>
-        </div>
-
-        {bucket.link && (
+        <dl className="mt-6 flex flex-col gap-4">
           <div>
-            <dt className="text-sm text-muted">Link</dt>
-            <dd>
-              <a
-                href={bucket.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent-hover underline"
-              >
-                {bucket.link}
-              </a>
+            <dt className="text-sm text-muted">Category</dt>
+            <dd>{bucket.category}</dd>
+          </div>
+
+          <div>
+            <dt className="text-sm text-muted">Status</dt>
+            <dd className={bucket.done ? "text-secondary" : undefined}>
+              {bucket.done ? `Done (${bucket.doneDate})` : "Open"}
             </dd>
           </div>
-        )}
 
-        {bucket.description && (
-          <div>
-            <dt className="text-sm text-muted">Description</dt>
-            <dd className="whitespace-pre-wrap">{bucket.description}</dd>
-          </div>
-        )}
-      </dl>
+          {bucket.link && (
+            <div>
+              <dt className="text-sm text-muted">Link</dt>
+              <dd>
+                <a
+                  href={bucket.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent-hover underline"
+                >
+                  {bucket.link}
+                </a>
+              </dd>
+            </div>
+          )}
 
-      {isEditOpen && (
-        <Modal title="Edit bucket" onClose={() => setIsEditOpen(false)}>
-          <BucketForm
-            initial={bucket}
-            submitLabel="Save changes"
-            onSave={handleSave}
-          />
-        </Modal>
-      )}
-    </div>
+          {bucket.description && (
+            <div>
+              <dt className="text-sm text-muted">Description</dt>
+              <dd className="whitespace-pre-wrap">{bucket.description}</dd>
+            </div>
+          )}
+        </dl>
+
+        {isEditOpen && (
+          <Modal title="Edit bucket" onClose={() => setIsEditOpen(false)}>
+            <BucketForm
+              initial={bucket}
+              submitLabel="Save changes"
+              onSave={handleSave}
+            />
+          </Modal>
+        )}
+      </div>
+    </>
   );
 }
