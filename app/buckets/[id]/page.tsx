@@ -3,11 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
-import { ActivityBackground } from "@/components/ActivityBackground";
 import { BucketForm } from "@/components/BucketForm";
+import { CategoryBackground } from "@/components/CategoryBackground";
 import { Modal } from "@/components/Modal";
-import { OtherBackground } from "@/components/OtherBackground";
-import { PlaceBackground } from "@/components/PlaceBackground";
 import { useBuckets } from "@/hooks/useBuckets";
 import type { Bucket, BucketInput } from "@/types/bucket";
 
@@ -64,9 +62,7 @@ export default function BucketDetailPage({
   // or "not found", and never for the wrong category.
   return (
     <>
-      {bucket.category === "Activity" && <ActivityBackground />}
-      {bucket.category === "Place" && <PlaceBackground />}
-      {bucket.category === "Other" && <OtherBackground />}
+      <CategoryBackground category={bucket.category} />
       <div className="max-w-xl">
         <p className="mb-4">
           <Link href="/" className="text-accent-hover hover:underline">
