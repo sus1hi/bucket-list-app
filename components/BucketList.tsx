@@ -3,18 +3,22 @@ import type { Bucket } from "@/types/bucket";
 
 export function BucketList({ buckets }: { buckets: Bucket[] }) {
   return (
-    <ul className="mt-6 divide-y divide-zinc-200 dark:divide-zinc-800">
+    <ul className="mt-6 divide-y divide-muted/30">
       {buckets.map((bucket) => (
         <li key={bucket.id} className="py-3">
           <Link
             href={`/buckets/${bucket.id}`}
-            className="font-medium hover:underline"
+            className="font-bold hover:text-accent-hover"
           >
             {bucket.headline}
           </Link>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="text-sm text-muted">
             {bucket.category} &middot;{" "}
-            {bucket.done ? `Done (${bucket.doneDate})` : "Open"}
+            {bucket.done ? (
+              <span className="text-secondary">Done ({bucket.doneDate})</span>
+            ) : (
+              "Open"
+            )}
           </p>
         </li>
       ))}

@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Kalam } from "next/font/google";
 import Link from "next/link";
 import { CATEGORIES } from "@/types/bucket";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Kalam ships real 400 and 700 cuts, so emphasis uses a drawn bold rather
+// than a browser-synthesized one. Use font-bold (700) for emphasis; the
+// intermediate utilities have no matching cut.
+const kalam = Kalam({
+  weight: ["400", "700"],
+  variable: "--font-handwriting",
   subsets: ["latin"],
 });
 
@@ -27,13 +26,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${kalam.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <nav className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
+        <nav className="border-b border-muted/40 px-6 py-4">
           <ul className="flex gap-4">
             <li>
-              <Link href="/" className="hover:underline">
+              <Link href="/" className="hover:text-accent-hover">
                 Home
               </Link>
             </li>
@@ -41,7 +40,7 @@ export default function RootLayout({
               <li key={category}>
                 <Link
                   href={`/category/${category}`}
-                  className="hover:underline"
+                  className="hover:text-accent-hover"
                 >
                   {category}
                 </Link>

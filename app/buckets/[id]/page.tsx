@@ -36,16 +36,16 @@ export default function BucketDetailPage({
 
   // The list only exists after the hook has read localStorage.
   if (!loaded) {
-    return <p className="text-zinc-600 dark:text-zinc-400">Loading…</p>;
+    return <p className="text-muted">Loading…</p>;
   }
 
   if (!bucket) {
     if (isDeleting) return null;
     return (
       <div>
-        <h1 className="text-2xl font-semibold">Bucket not found</h1>
+        <h1 className="text-2xl font-bold">Bucket not found</h1>
         <p className="mt-4">
-          <Link href="/" className="hover:underline">
+          <Link href="/" className="text-accent-hover hover:underline">
             Back to list
           </Link>
         </p>
@@ -56,26 +56,22 @@ export default function BucketDetailPage({
   return (
     <div className="max-w-xl">
       <p className="mb-4">
-        <Link href="/" className="hover:underline">
+        <Link href="/" className="text-accent-hover hover:underline">
           Back to list
         </Link>
       </p>
 
       <div className="flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-semibold">{bucket.headline}</h1>
+        <h1 className="text-2xl font-bold">{bucket.headline}</h1>
         <div className="flex gap-2">
           <button
             type="button"
             onClick={() => setIsEditOpen(true)}
-            className="rounded border border-zinc-300 px-3 py-1 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+            className="btn"
           >
             Edit
           </button>
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="rounded border border-zinc-300 px-3 py-1 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-          >
+          <button type="button" onClick={handleDelete} className="btn">
             Delete
           </button>
         </div>
@@ -83,24 +79,26 @@ export default function BucketDetailPage({
 
       <dl className="mt-6 flex flex-col gap-4">
         <div>
-          <dt className="text-sm text-zinc-600 dark:text-zinc-400">Category</dt>
+          <dt className="text-sm text-muted">Category</dt>
           <dd>{bucket.category}</dd>
         </div>
 
         <div>
-          <dt className="text-sm text-zinc-600 dark:text-zinc-400">Status</dt>
-          <dd>{bucket.done ? `Done (${bucket.doneDate})` : "Open"}</dd>
+          <dt className="text-sm text-muted">Status</dt>
+          <dd className={bucket.done ? "text-secondary" : undefined}>
+            {bucket.done ? `Done (${bucket.doneDate})` : "Open"}
+          </dd>
         </div>
 
         {bucket.link && (
           <div>
-            <dt className="text-sm text-zinc-600 dark:text-zinc-400">Link</dt>
+            <dt className="text-sm text-muted">Link</dt>
             <dd>
               <a
                 href={bucket.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline"
+                className="text-accent-hover underline"
               >
                 {bucket.link}
               </a>
@@ -110,9 +108,7 @@ export default function BucketDetailPage({
 
         {bucket.description && (
           <div>
-            <dt className="text-sm text-zinc-600 dark:text-zinc-400">
-              Description
-            </dt>
+            <dt className="text-sm text-muted">Description</dt>
             <dd className="whitespace-pre-wrap">{bucket.description}</dd>
           </div>
         )}

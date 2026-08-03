@@ -15,7 +15,7 @@ function toFormState(initial?: BucketInput) {
 }
 
 const inputClasses =
-  "w-full rounded border border-zinc-300 px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900";
+  "w-full rounded border border-muted/40 bg-background px-2 py-1";
 
 // The bucket is written by the parent, which owns the list state. This
 // component only collects the input, for both creating and editing.
@@ -109,10 +109,7 @@ export function BucketForm({
         />
       </label>
 
-      <button
-        type="submit"
-        className="self-start rounded border border-zinc-300 px-3 py-1 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-      >
+      <button type="submit" className="btn self-start">
         {submitLabel}
       </button>
     </form>

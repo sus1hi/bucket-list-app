@@ -23,8 +23,8 @@ export default function CategoryPage({
   if (!category) {
     return (
       <div className="max-w-xl">
-        <h1 className="text-2xl font-semibold">Unknown category</h1>
-        <p className="mt-6 text-zinc-600 dark:text-zinc-400">
+        <h1 className="text-2xl font-bold">Unknown category</h1>
+        <p className="mt-6 text-muted">
           &quot;{name}&quot; is not one of {CATEGORIES.join(", ")}.
         </p>
       </div>
@@ -35,10 +35,10 @@ export default function CategoryPage({
 
   return (
     <div className="max-w-xl">
-      <h1 className="text-2xl font-semibold">Category: {category}</h1>
+      <h1 className="text-2xl font-bold">Category: {category}</h1>
 
       {loaded && matches.length === 0 && (
-        <p className="mt-6 text-zinc-600 dark:text-zinc-400">
+        <p className="mt-6 text-muted">
           No buckets in this category yet.
         </p>
       )}

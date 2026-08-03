@@ -30,18 +30,18 @@ export default function Home() {
   return (
     <div className="max-w-xl">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Bucket List</h1>
+        <h1 className="text-2xl font-bold">Bucket List</h1>
         <button
           type="button"
           onClick={() => setIsFormOpen(true)}
-          className="rounded border border-zinc-300 px-3 py-1 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+          className="btn"
         >
           + Add bucket
         </button>
       </div>
 
       {loaded && (
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 text-sm text-muted">
           {doneCount} done &middot; {openCount} open
         </p>
       )}
@@ -52,19 +52,15 @@ export default function Home() {
         onChange={(event) => setSearch(event.target.value)}
         placeholder="Search by headline"
         aria-label="Search buckets by headline"
-        className="mt-6 w-full rounded border border-zinc-300 px-2 py-1 dark:border-zinc-700 dark:bg-zinc-900"
+        className="mt-6 w-full rounded border border-muted/40 bg-surface px-2 py-1"
       />
 
       {loaded && buckets.length === 0 && (
-        <p className="mt-6 text-zinc-600 dark:text-zinc-400">
-          No buckets yet.
-        </p>
+        <p className="mt-6 text-muted">No buckets yet.</p>
       )}
 
       {buckets.length > 0 && visibleBuckets.length === 0 && (
-        <p className="mt-6 text-zinc-600 dark:text-zinc-400">
-          No buckets match your search.
-        </p>
+        <p className="mt-6 text-muted">No buckets match your search.</p>
       )}
 
       {visibleBuckets.length > 0 && <BucketList buckets={visibleBuckets} />}
