@@ -3,6 +3,7 @@
 import { use } from "react";
 import { ActivityBackground } from "@/components/ActivityBackground";
 import { BucketList } from "@/components/BucketList";
+import { PlaceBackground } from "@/components/PlaceBackground";
 import { useBuckets } from "@/hooks/useBuckets";
 import { CATEGORIES } from "@/types/bucket";
 
@@ -37,6 +38,7 @@ export default function CategoryPage({
   return (
     <>
       {category === "Activity" && <ActivityBackground />}
+      {category === "Place" && <PlaceBackground />}
       <div className="max-w-xl">
         <h1 className="text-2xl font-bold">Category: {category}</h1>
 

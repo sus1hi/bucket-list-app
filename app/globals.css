@@ -8,7 +8,7 @@
   --accent: #e0985b; /* warm amber, used for buttons */
   --accent-hover: #ca8952; /* slightly darker amber */
   --secondary: #a4575b; /* dusty rose, used for "Done" — 4.78:1 on cream */
-  --muted: #7d6a57; /* warm taupe, used for labels — 4.81:1 on cream */
+  --muted: #6d5c49; /* warm taupe, used for labels — 5.97:1 on cream */
 }
 
 @theme inline {
