@@ -54,5 +54,4 @@ flag.
 ## What I would keep or change
 
 I would keep the small single-feature commits and citing sources in `docs/`.
-Next time I would build the storage hook's load and save guards first, since
-every later bug traced back to them.
+Next time I would build the storage hook's load and save guards first, since load-order bugs were the trickiest kind to debug
