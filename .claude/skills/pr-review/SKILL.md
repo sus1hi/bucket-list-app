@@ -16,6 +16,11 @@ Determine the review range:
 - If that range is empty, or there are uncommitted changes → also run
   `git diff HEAD` and include the working tree in scope
 
+Also run `git status --porcelain` and list any untracked files separately.
+`git diff HEAD` does not show untracked files, but `git add .` will still
+commit them — so a new file holding a secret or a stray artifact is invisible
+to the diff commands above.
+
 Get the per-file summary first, before reading any file contents:
 
 ```
