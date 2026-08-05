@@ -159,7 +159,8 @@ export function ImportExport({
   }
 
   return (
-    <div className="mt-4">
+    // No outer margin: the caller places this block.
+    <div>
       <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"

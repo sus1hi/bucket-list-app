@@ -14,8 +14,11 @@ function toFormState(initial?: BucketInput) {
   };
 }
 
+// border-rule rather than a faded --muted: a field boundary is meaningful UI,
+// so it has to clear 3:1 against the paper behind it (4.01:1), which a 40%
+// tint of --muted did not (1.98:1).
 const inputClasses =
-  "w-full rounded border border-muted/40 bg-background px-2 py-1";
+  "w-full rounded border border-rule bg-background px-2 py-1";
 
 // The bucket is written by the parent, which owns the list state. This
 // component only collects the input, for both creating and editing.
