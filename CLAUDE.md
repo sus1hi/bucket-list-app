@@ -26,3 +26,11 @@ category filtering, text search, and a completed/open counter.
 - All code, comments, and file content must be in English.
 - Keep components small and focused; one feature at a time.
 - Do not run `npm audit fix --force`.
+- Follow WCAG contrast guidelines (minimum 4.5:1 for normal text, 3:1 for
+  large text) for all color and typography choices.
+- After any code change, run the build (`npx tsc --noEmit`) and any relevant
+  tests before reporting a task as complete. Never claim something works,
+  passes, or is verified without having actually run it.
+- Never invent data, results, or test outcomes. If something fails or
+  cannot be verified, state that clearly and stop — do not silently fall
+  back to a default, placeholder, or guessed value.
